@@ -8,6 +8,37 @@
 </head>
 <body>
   <div id="app"></div>
-  <script type="module" src="app.js"></script>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+    import { getDatabase } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+    import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCtgyueZRg7DRtvewLhq0omcjAQgm8nbII",
+      authDomain: "me-word-0704.firebaseapp.com",
+      databaseURL: "https://me-word-0704-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "me-word-0704",
+      storageBucket: "me-word-0704.firebasestorage.app",
+      messagingSenderId: "475298137489",
+      appId: "1:475298137489:web:5f92c91399ffe1403f8630"
+    };
+
+    const app = initializeApp(firebaseConfig);
+
+    window.firebaseApp = app;
+    window.db = getDatabase(app);
+    window.auth = getAuth(app);
+
+    try {
+      await signInAnonymously(window.auth);
+      console.log("익명 로그인 성공");
+    } catch (e) {
+      console.error("익명 로그인 실패", e);
+    }
+
+    await import("./app.js");
+  </script>
 </body>
 </html>
